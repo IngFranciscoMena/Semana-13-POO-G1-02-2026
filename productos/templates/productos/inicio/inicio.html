@@ -1,7 +1,20 @@
 {% extends "productos/base.html" %}
 
 {% block contenido %}
-<h2>Bienvenidos al Inicio de la aplicacion de productos.</h2>
+<div class="container">
 
-<button class="btn btn-primary">Este es un boton usando bootstrap</button>
+    <h2 class="text-center">Bienvenidos al Inicio de la aplicacion de productos.</h2>
+    <hr>
+    <div class="row text-center">
+        <div class="col-12 col-md-6">
+            <a href="{% url 'productos:lista' %}" class="btn btn-primary">Productos</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <button class="btn btn-warning">Reportes</button>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends "productos/base.html" %}
+
+{% block contenido %}
+<div class="container mt-4">
+    <h2>Registrar Producto</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            Guardar producto
+        </button>
+        <a href="{% url 'productos:lista' %}" class="btn btn-secondary">
+            Volver a listado productos
+        </a>
+    </form>
+</div>
+{% endblock %}
