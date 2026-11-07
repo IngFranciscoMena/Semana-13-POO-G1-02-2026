@@ -14,20 +14,21 @@
     <thead>
         <tr>
             <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Ubicación</th>
             <th>Stock</th>
-            <th>Actualización</th>
+            <th>Ubicación</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         {% for inventario in inventarios %}
         <tr>
             <td>{{ inventario.producto }}</td>
-            <td>${{ inventario.cantidad }}</td>
+            <td>{{ inventario.cantidad }}</td>
             <td>{{ inventario.ubicacion }}</td>
-            <td>{{ inventario.stock }}</td>
-            <td>{{ inventario.fecha_actualizacion }}</td>
+            <td>
+                <a href="{% url 'productos:inventario_editar' inventario.pk %}" class="btn btn-success">Editar</a>
+                <a href="{% url 'productos:inventario_eliminar' inventario.pk %}" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
         {% empty %}
         <tr>

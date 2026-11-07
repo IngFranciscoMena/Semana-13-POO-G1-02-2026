@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView #, DetailView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 ## CRUD - Create, Read, Update, Delete
 
@@ -32,6 +32,13 @@ class ProductoUpdateView(UpdateView):
     template_name = "productos/formulario.html"
     success_url = reverse_lazy("productos:lista")
 
+
+class ProductoDeleteView(DeleteView):
+
+    model = Producto
+    template_name = "productos/confirmar_eliminar.html"
+    success_url = reverse_lazy("productos:lista")
+
 ## CRUD para Inventarios
 class InventarioListView(ListView):
 
@@ -44,4 +51,17 @@ class InventarioCreateView(CreateView):
     model = Inventario
     form_class = InventarioForm
     template_name = "productos/inventarios/formulario.html"
+    success_url = reverse_lazy("productos:inventario_lista")
+
+class InventarioUpdateView(UpdateView):
+
+    model = Inventario
+    form_class = InventarioForm
+    template_name = "productos/inventarios/formulario.html"
+    success_url = reverse_lazy("productos:inventario_lista")
+
+class InventarioDeleteView(DeleteView):
+
+    model = Inventario
+    template_name = "productos/inventarios/confirmar_eliminar.html"
     success_url = reverse_lazy("productos:inventario_lista")
