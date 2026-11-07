@@ -7,31 +7,175 @@
     <title>Tienda Web</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            min-height: 70vh;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+        }
+
+        .card-header {
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .footer {
+            background-color: #212529;
+            color: #adb5bd;
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                    fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
-                    <path
-                        d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z" />
-                </svg></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- NAVBAR PRINCIPAL -->
+    <nav class="navbar navbar-expand-lg
+                navbar-dark bg-dark shadow-sm">
+
+        <div class="container">
+
+            <a class="navbar-brand"
+               href="{% url 'inicio' %}">
+                🏪 Tienda Web
+            </a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarPrincipal"
+                aria-controls="navbarPrincipal"
+                aria-expanded="false"
+                aria-label="Mostrar menú">
+
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="{% url 'inicio' %}">Inicio</a>
-                    <a class="nav-link" href="{% url 'productos:lista' %}">Productos</a>
-                    <a class="nav-link" href="#">Contacto</a>
+
+            <div class="collapse navbar-collapse"
+                 id="navbarPrincipal">
+
+                <div class="navbar-nav ms-auto gap-lg-2">
+
+                    <a class="nav-link"
+                       href="{% url 'inicio' %}">
+                        Inicio
+                    </a>
+
+                    <a class="nav-link"
+                       href="{% url 'productos:lista' %}">
+                        Productos
+                    </a>
+
+                    <a class="nav-link"
+                       href="{% url 'productos:inventario_lista' %}">
+                        Inventario
+                    </a>
+
+                    <a class="nav-link"
+                       href="#contacto">
+                        Contacto
+                    </a>
+
                 </div>
             </div>
+
         </div>
     </nav>
-    {% block contenido %}
-    {% endblock %}
+
+     <!-- CONTENIDO DE CADA PÁGINA -->
+    <main class="main-content py-4">
+
+        <div class="container">
+
+            {% if messages %}
+                {% for message in messages %}
+
+                    <div
+                        class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                        role="alert">
+
+                        {{ message }}
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Cerrar">
+                        </button>
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+
+            {% block contenido %}
+            {% endblock %}
+
+        </div>
+
+    </main>
+
+    <!-- SECCIÓN DE CONTACTO -->
+    <footer id="contacto"
+            class="footer py-4 mt-5">
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <h5 class="text-white">
+                        Tienda Web
+                    </h5>
+
+                    <p class="mb-0">
+                        Sistema de administración
+                        de productos e inventario
+                        desarrollado con Django.
+                    </p>
+
+                </div>
+
+                <div class="col-md-6 text-md-end">
+
+                    <h5 class="text-white">
+                        Contacto
+                    </h5>
+
+                    <p class="mb-1">
+                        Soporte del sistema
+                    </p>
+
+                    <p class="mb-0">
+                        Información de contacto
+                        pendiente de configurar.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <hr class="border-secondary">
+
+            <p class="text-center mb-0 small">
+                &copy; {% now "Y" %}
+                Tienda Web - Proyecto académico
+            </p>
+
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
