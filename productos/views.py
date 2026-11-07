@@ -1,3 +1,6 @@
+from django.db.models import ProtectedError
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
@@ -38,6 +41,19 @@ class ProductoDeleteView(DeleteView):
     model = Producto
     template_name = "productos/confirmar_eliminar.html"
     success_url = reverse_lazy("productos:lista")
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()            
+        except ProtectedError:
+            messages.error(
+                self.request,
+                "No se puede eliminar el producto porque tiene registros de inventario asociados."
+            )
+            return HttpResponseRedirect(self.get_success_url())
+        
+        return HttpResponseRedirect(self.get_success_url())
+    
 
 ## CRUD para Inventarios
 class InventarioListView(ListView):

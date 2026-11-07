@@ -1,41 +1,111 @@
 {% extends "productos/base.html" %}
 
 {% block contenido %}
-<div class="container mt-4">
-    <h2>Productos registrados</h2>
-    <a href="{% url 'productos:crear'%}" class="btn btn-success mb-3">Nuevo Producto</a>
 
-    <a href="{% url 'productos:inventario_lista' %}" class="btn btn-secondary mb-3">Ver inventario</a>
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+
+    {{ message }}
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar">
+    </button>
 </div>
 
-<div class="container">
-    <table class="table table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for producto in productos %}
-        <tr>
-            <td>{{ producto.nombre }}</td>
-            <td>${{ producto.precio }}</td>
-            <td>
-                <a href="{% url 'productos:editar' producto.pk %}" class="btn btn-success">Editar</a>
-                <a href="{% url 'productos:eliminar' producto.pk %}" class="btn btn-danger">Eliminar</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">
-                No hay productos registrados.
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% endfor %}
+{% endif %}
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-dark text-white py-3">
+
+        <div class="d-flex justify-content-between
+                    align-items-center flex-wrap gap-2">
+
+            <h4 class="mb-0">
+                Catálogo de productos
+            </h4>
+
+            <a href="{% url 'productos:crear' %}" class="btn btn-primary btn-sm">
+                + Nuevo producto
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <p class="text-muted">
+            Administración de productos registrados.
+        </p>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover
+                          table-striped align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for producto in productos %}
+
+                    <tr>
+
+                        <td>{{ producto.pk }}</td>
+
+                        <td class="fw-semibold">
+                            {{ producto.nombre }}
+                        </td>
+
+                        <td>
+                            ${{ producto.precio }}
+                        </td>
+
+                        <td>
+                            <div class="d-flex gap-2">
+
+                                <a href="{% url 'productos:editar' producto.pk %}" class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+                                <a href="{% url 'productos:eliminar' producto.pk %}"
+                                    class="btn btn-outline-danger btn-sm">
+                                    Eliminar
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            No hay productos registrados.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
 {% endblock %}
